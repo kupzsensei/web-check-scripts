@@ -74,7 +74,7 @@ import {
   parseShodanResults,
   ShodanResults,
 } from "utils/result-processor";
-import Sample from "components/sterbenj/sample";
+import Subdomain from "components/sterbenj/sub-domain";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -169,6 +169,7 @@ const Results = (): JSX.Element => {
 
   const [addressType, setAddressType] = useState<AddressType>("empt");
   const { address } = useParams();
+  console.log('useparams result' , address)
 
   const [loadingJobs, setLoadingJobs] = useState<LoadingJob[]>(initialJobs);
   const [modalOpen, setModalOpen] = useState(false);
@@ -270,7 +271,6 @@ const Results = (): JSX.Element => {
 
   // const api = 'http://localhost:3000/api'; // Where is the API hosted?
   const api = process.env.REACT_APP_API_ENDPOINT || "/api"; // Where is the API hosted?
-  console.log(api, "this is my console");
   // console.log(process.env.REACT_APP_API_ENDPOINT , 'REACT_APP_API_ENDPOINT')
 
   // Fetch and parse IP address for given URL
@@ -990,7 +990,7 @@ const Results = (): JSX.Element => {
   return (
     <>
       <ResultsOuter>
-        <Sample />
+      
         <Nav>
           {address && (
             <Heading color={colors.textColor} size="medium">
@@ -1007,6 +1007,7 @@ const Results = (): JSX.Element => {
             </Heading>
           )}
         </Nav>
+        <Subdomain domain={address || ""} />
         <ProgressBar
           loadStatus={loadingJobs}
           showModal={showErrorModal}
