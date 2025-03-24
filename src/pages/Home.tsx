@@ -95,7 +95,7 @@ const SiteFeaturesWrapper = styled(StyledCard)`
 `;
 
 const Home = (): JSX.Element => {
-  const defaultPlaceholder = 'e.g. https://felixent.net/';
+  const defaultPlaceholder = 'e.g. https://cecuri.com/';
   const [userInput, setUserInput] = useState('');
   const [errorMsg, setErrMsg] = useState('');
   const [placeholder] = useState(defaultPlaceholder);

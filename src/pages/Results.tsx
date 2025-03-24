@@ -164,6 +164,8 @@ const FilterButtons = styled.div`
   }
 `;
 
+
+
 const Results = (): JSX.Element => {
   const startTime = new Date().getTime();
 

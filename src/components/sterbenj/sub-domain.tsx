@@ -3,6 +3,8 @@ import colors from "styles/colors";
 import Card from "components/Form/Card";
 import Heading from "components/Form/Heading";
 import { useState, useEffect, ReactNode } from "react";
+import { NavigateOptions, useNavigate } from "react-router-dom";
+import { determineAddressType } from "utils/address-type-checker";
 
 const LoadCard = styled(Card)`
   margin: 0 auto 1rem auto;
@@ -193,6 +195,37 @@ const sampleFetch = async (domain: string) => {
 const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
   const [hideLoader, setHideLoader] = useState<boolean>(false);
   const [subdomains, setSubdomains] = useState<string[]>([]);
+  //   start insert
+  const defaultPlaceholder = "e.g. https://cecuri.com/";
+  const [errorMsg, setErrMsg] = useState("");
+  const [placeholder] = useState(defaultPlaceholder);
+  const [inputDisabled] = useState(false);
+  const navigate = useNavigate();
+
+  /* Check is valid address, either show err or redirect to results page */
+  const subScan = (userInput: string) => {
+    let address = userInput.endsWith("/") ? userInput.slice(0, -1) : userInput;
+    const addressType = determineAddressType(address);
+
+    if (addressType === "empt") {
+      setErrMsg("Field must not be empty");
+    } else if (addressType === "err") {
+      setErrMsg("Must be a valid URL, IPv4 or IPv6 Address");
+    } else {
+      // if the addressType is 'url' and address doesn't start with 'http://' or 'https://', prepend 'https://'
+      if (addressType === "url" && !/^https?:\/\//i.test(address)) {
+        address = "https://" + address;
+      }
+      const resultRouteParams: NavigateOptions = {
+        state: { address, addressType },
+      };
+      //   navigate(`/results/${encodeURIComponent(address)}`, resultRouteParams);
+    //   window.open(`/results/${encodeURIComponent(address)}`, "_blank");
+      window.open(`${window.location.origin}/results/${encodeURIComponent(address)}`, '_blank');
+
+    }
+  };
+  // end insert
   useEffect(() => {
     sampleFetch(domain).then((res) => {
       if (res.subdomains) {
@@ -214,14 +247,25 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
         </StatusInfoWrapper>
 
         <Details>
-          <summary>Show Subdomains <p style={{marginLeft: '10px' , fontWeight:'bold', color: 'lightgreen'}}>{subdomains.length}</p></summary>
+          <summary>
+            Show Subdomains{" "}
+            <p
+              style={{
+                marginLeft: "10px",
+                fontWeight: "bold",
+                color: "lightgreen",
+              }}
+            >
+              {subdomains.length}
+            </p>
+          </summary>
           <ul
             style={{
               display: "flex",
               flexWrap: "wrap",
               maxHeight: "400px",
-              overflowY:'auto',
-              height: '400px',
+              overflowY: "auto",
+            //   height: "400px",
               gap: "1rem",
             }}
           >
@@ -229,22 +273,27 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
               <li
                 key={sub}
                 style={{
-                  padding: ".2rem 1rem",
+                  padding: "0 1rem",
                   boxShadow: "0 0 0 2px black",
                   border: "1px solid green",
                   display: "flex",
                   gap: "1rem",
                   alignItems: "center",
+                  height: 'max-content'
                 }}
               >
                 <p>{sub}</p>
                 <button
+                  onClick={() => {
+                    subScan(sub);
+                  }}
                   style={{
                     padding: "2px 5px 2px 5px",
                     color: "lightgreen",
                     border: "1px solid gray",
                     backgroundColor: "transparent",
                     height: "max-content",
+                    cursor: 'pointer'
                   }}
                 >
                   scan
