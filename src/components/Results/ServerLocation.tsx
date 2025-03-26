@@ -47,10 +47,10 @@ const ServerLocationCard = (props: { data: ServerLocation, title: string, action
       <Row lbl="Timezone" val={timezone} />
       <Row lbl="Languages" val={languages} />
       <Row lbl="Currency" val={`${currency} (${currencyCode})`} />
-      <MapRow>
+      {/* <MapRow>
         <LocationMap lat={coords.latitude} lon={coords.longitude} label={`Server (${isp})`} />
         <SmallText>Latitude: {coords.latitude}, Longitude: {coords.longitude} </SmallText>
-      </MapRow>
+      </MapRow> */}
     </Card>
   );
 }

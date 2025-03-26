@@ -220,9 +220,11 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
         state: { address, addressType },
       };
       //   navigate(`/results/${encodeURIComponent(address)}`, resultRouteParams);
-    //   window.open(`/results/${encodeURIComponent(address)}`, "_blank");
-      window.open(`${window.location.origin}/results/${encodeURIComponent(address)}`, '_blank');
-
+      //   window.open(`/results/${encodeURIComponent(address)}`, "_blank");
+      window.open(
+        `${window.location.origin}/results/${encodeURIComponent(address)}`,
+        "_blank"
+      );
     }
   };
   // end insert
@@ -234,6 +236,11 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
     });
   }, [domain]);
 
+  const btnScanAll = () => {
+    // navigate("/summary", { state: subdomains });
+    navigate("/summary", { state: subdomains });
+  };
+
   return (
     <>
       <ReShowContainer className={!hideLoader ? "hidden" : ""}>
@@ -243,7 +250,23 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
       </ReShowContainer>
       <LoadCard className={hideLoader ? "hidden" : ""}>
         <StatusInfoWrapper>
-          <h1>Subdomains</h1>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <h1>Subdomains</h1>
+            <button
+              onClick={btnScanAll}
+              style={{
+                padding: "3px 1rem",
+                border: "2px solid darkgreen",
+                height: "max-content",
+                backgroundColor: "transparent",
+                color: "white",
+                cursor: "pointer",
+                boxShadow: "0 0 5px black",
+              }}
+            >
+              Scan all
+            </button>
+          </div>
         </StatusInfoWrapper>
 
         <Details>
@@ -256,7 +279,7 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
                 color: "lightgreen",
               }}
             >
-              {subdomains.length}
+              {subdomains.length === 0 ? "Loading data..." : subdomains.length}
             </p>
           </summary>
           <ul
@@ -265,7 +288,7 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
               flexWrap: "wrap",
               maxHeight: "400px",
               overflowY: "auto",
-            //   height: "400px",
+              //   height: "400px",
               gap: "1rem",
             }}
           >
@@ -279,7 +302,7 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
                   display: "flex",
                   gap: "1rem",
                   alignItems: "center",
-                  height: 'max-content'
+                  height: "max-content",
                 }}
               >
                 <p>{sub}</p>
@@ -293,7 +316,7 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
                     border: "1px solid gray",
                     backgroundColor: "transparent",
                     height: "max-content",
-                    cursor: 'pointer'
+                    cursor: "pointer",
                   }}
                 >
                   scan

@@ -7,6 +7,7 @@ import Results from 'pages/Results';
 import About from 'pages/About';
 import NotFound from 'pages/NotFound';
 import colors from 'styles/colors';
+import SummaryPage from 'components/sterbenj/summary';
 
 const Container = Styled.main`
   background: ${colors.background};
@@ -35,6 +36,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/summary" element={<SummaryPage />} />
         <Route path="/results/:address" element={<Results />} />
       </Routes>
     </Container>

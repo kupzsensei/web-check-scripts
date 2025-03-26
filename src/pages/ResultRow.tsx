@@ -181,12 +181,13 @@ export const parseJson = (response: Response): Promise<any> => {
   });
 };
 
-const Results = (): JSX.Element => {
+const ResultRow = ({ address }: { address: string }): JSX.Element => {
   const startTime = new Date().getTime();
 
   const [addressType, setAddressType] = useState<AddressType>("empt");
-  const { address } = useParams();
-  console.log('useparams result' , address)
+  //   const { address } = useParams();
+  //   const address = "sirbenj.pro";
+  //   console.log("useparams result", address);
 
   const [loadingJobs, setLoadingJobs] = useState<LoadingJob[]>(initialJobs);
   const [modalOpen, setModalOpen] = useState(false);
@@ -266,8 +267,6 @@ const Results = (): JSX.Element => {
     },
     [startTime]
   );
-
- 
 
   const urlTypeOnly = ["url"] as AddressType[]; // Many jobs only run with these address types
 
@@ -991,26 +990,8 @@ const Results = (): JSX.Element => {
 
   return (
     <>
-      <ResultsOuter>
-      
-        <Nav>
-          {address && (
-            <Heading color={colors.textColor} size="medium">
-              {addressType === "url" && (
-                <a href={address}>
-                  <img
-                    width="32px"
-                    src={`https://icon.horse/icon/${makeSiteName(address)}`}
-                    alt=""
-                  />
-                </a>
-              )}
-              {makeSiteName(address)}
-            </Heading>
-          )}
-        </Nav>
-        <Subdomain domain={address || ""} />
-        <ProgressBar
+      {/* <ResultsOuter> */}
+      {/* <ProgressBar
           loadStatus={loadingJobs}
           showModal={showErrorModal}
           showJobDocs={showInfo}
@@ -1024,67 +1005,10 @@ const Results = (): JSX.Element => {
               .length < 5
           }
         />
-        <FilterButtons>
-          {showFilters ? (
-            <>
-              <div className="one-half">
-                <span className="group-label">Filter by</span>
-                {["server", "client", "meta"].map((tag: string) => (
-                  <button
-                    key={tag}
-                    className={tags.includes(tag) ? "selected" : ""}
-                    onClick={() => updateTags(tag)}
-                  >
-                    {tag}
-                  </button>
-                ))}
-                {(tags.length > 0 || searchTerm.length > 0) && (
-                  <span onClick={clearFilters} className="clear">
-                    Clear Filters
-                  </span>
-                )}
-              </div>
-              <div className="one-half">
-                <span className="group-label">Search</span>
-                <input
-                  type="text"
-                  placeholder="Filter Results"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <span
-                  className="toggle-filters"
-                  onClick={() => setShowFilters(false)}
-                >
-                  Hide
-                </span>
-              </div>
-            </>
-          ) : (
-            <div className="control-options">
-              <span
-                className="toggle-filters"
-                onClick={() => setShowFilters(true)}
-              >
-                Show Filters
-              </span>
-              <a href="#view-download-raw-data">
-                <span className="toggle-filters">Export Data</span>
-              </a>
-              <a href="/about">
-                <span className="toggle-filters">Learn about the Results</span>
-              </a>
-              <a href="/about#additional-resources">
-                <span className="toggle-filters">More tools</span>
-              </a>
-              <a href="https://github.com/sethuaung/web-check">
-                <span className="toggle-filters">View GitHub</span>
-              </a>
-            </div>
-          )}
-        </FilterButtons>
-        <ResultsContent>
-          <Masonry
+        <FilterButtons></FilterButtons> */}
+      <tr>
+        {/* <ResultsContent> */}
+        {/* <Masonry
             breakpointCols={{
               10000: 12,
               4000: 9,
@@ -1099,20 +1023,27 @@ const Results = (): JSX.Element => {
             }}
             className="masonry-grid"
             columnClassName="masonry-grid-col"
-          >
-            {resultCardData.map(
-              (
-                { id, title, result, tags, refresh, Component },
-                index: number
-              ) => {
-                const show =
-                  (tags.length === 0 ||
-                    tags.some((tag) => tags.includes(tag))) &&
-                  title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                  result &&
-                  !result.error;
-                return show ? (
-                  <ErrorBoundary title={title}>
+          > */}
+        <td style={{ textAlign: "center", width: "max-content" }}>{address}</td>
+        {resultCardData.map(
+          ({ id, title, result, tags, refresh, Component }, index: number) => {
+            const show =
+              (tags.length === 0 || tags.some((tag) => tags.includes(tag))) &&
+              title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+              result &&
+              !result.error;
+            return show ? (
+              <td>
+                <ErrorBoundary title={title}>
+                  <div
+                    style={{
+                      height: "200px",
+                      overflowY: "auto",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
                     <Component
                       key={`${title}-${index}`}
                       data={{ ...result }}
@@ -1125,28 +1056,31 @@ const Results = (): JSX.Element => {
                           : undefined
                       }
                     />
-                  </ErrorBoundary>
-                ) : null;
-              }
-            )}
-          </Masonry>
-        </ResultsContent>
-        <ViewRaw everything={resultCardData} />
-        <AdditionalResources url={address} />
-        <Footer />
-        <Modal isOpen={modalOpen} closeModal={() => setModalOpen(false)}>
-          {modalContent}
-        </Modal>
-        <ToastContainer
-          limit={3}
-          draggablePercent={60}
-          autoClose={2500}
-          theme="dark"
-          position="bottom-right"
-        />
-      </ResultsOuter>
+                  </div>
+                </ErrorBoundary>
+              </td>
+            ) : null;
+          }
+        )}
+        {/* </Masonry> */}
+        {/* </ResultsContent> */}
+      </tr>
+      {/* <ViewRaw everything={resultCardData} /> */}
+      {/* <AdditionalResources url={address} /> */}
+      {/* <Footer /> */}
+      <Modal isOpen={modalOpen} closeModal={() => setModalOpen(false)}>
+        {modalContent}
+      </Modal>
+      <ToastContainer
+        limit={3}
+        draggablePercent={60}
+        autoClose={2500}
+        theme="dark"
+        position="bottom-right"
+      />
+      {/* </ResultsOuter> */}
     </>
   );
 };
 
-export default Results;
+export default ResultRow;
