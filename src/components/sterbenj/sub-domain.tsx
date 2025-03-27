@@ -252,20 +252,22 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
         <StatusInfoWrapper>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <h1>Subdomains</h1>
-            <button
-              onClick={btnScanAll}
-              style={{
-                padding: "3px 1rem",
-                border: "2px solid darkgreen",
-                height: "max-content",
-                backgroundColor: "transparent",
-                color: "white",
-                cursor: "pointer",
-                boxShadow: "0 0 5px black",
-              }}
-            >
-              Scan all
-            </button>
+            {subdomains.length === 0 ? null : (
+              <button
+                onClick={btnScanAll}
+                style={{
+                  padding: "3px 1rem",
+                  border: "2px solid darkgreen",
+                  height: "max-content",
+                  backgroundColor: "transparent",
+                  color: "white",
+                  cursor: "pointer",
+                  boxShadow: "0 0 5px black",
+                }}
+              >
+                Scan all
+              </button>
+            )}
           </div>
         </StatusInfoWrapper>
 
