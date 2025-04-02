@@ -65,14 +65,14 @@ const useMotherOfAllHooks = <ResultType = any>(
             { jobID: jobId, address: address },
             "give me this shit"
           );
-          const safeAddress = address?.toString() ?? "notfound"; // Ensure address is always a string
-          setJsonFile((prev) => ({
-            ...prev,
-            [safeAddress]: {
-              ...prev[safeAddress],
-              [jobId.toString()]: res,
-            },
-          }));
+          // const safeAddress = address?.toString() ?? "notfound"; // Ensure address is always a string
+          // setJsonFile((prev) => ({
+          //   ...prev,
+          //   [safeAddress]: {
+          //     ...prev[safeAddress],
+          //     [jobId.toString()]: res,
+          //   },
+          // }));
           updateLoadingJobs(jobId, "success", "", undefined, res);
         }
       })
