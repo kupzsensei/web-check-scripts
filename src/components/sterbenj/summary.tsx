@@ -4,6 +4,7 @@ import Heading from "components/Form/Heading";
 import colors from "styles/colors";
 import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
+import { useState } from "react";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -30,7 +31,10 @@ const ResultsContent = styled.section`
 
 const SummaryPage = (): JSX.Element => {
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
+  // const [jsonFile , setJsonFile] = useState({})
+  // console.log(jsonFile , 'this is my json file')
+
   return (
     <main
       style={{

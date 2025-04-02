@@ -398,9 +398,10 @@ const ResultRow = ({ address }: { address: string }): JSX.Element => {
     updateLoadingJobs,
     addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly },
     fetchRequest: () =>
-      fetch(`${api}/http-security?url=${address}`).then((res) =>
-        parseJson(res)
-      ),
+      fetch(`${api}/http-security?url=${address}`).then((res) => {
+        // console.log(parseJson(res), "give this bull shit!");
+        return parseJson(res);
+      }),
   });
 
   // Get social media previews, from a sites social meta tags
@@ -638,6 +639,7 @@ const ResultRow = ({ address }: { address: string }): JSX.Element => {
               }`,
             };
           }
+          // console.log(res , 'give this bull shit!')
           return res;
         }),
   });

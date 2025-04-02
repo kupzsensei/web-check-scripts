@@ -1009,7 +1009,7 @@ const Results = (): JSX.Element => {
             </Heading>
           )}
         </Nav>
-        <Subdomain domain={address || ""} />
+        <Subdomain domain={address || ""} api={api} />
         <ProgressBar
           loadStatus={loadingJobs}
           showModal={showErrorModal}

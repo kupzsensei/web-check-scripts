@@ -181,9 +181,9 @@ const ErrorModalContent = styled.div`
   }
 `;
 
-const sampleFetch = async (domain: string) => {
+const sampleFetch = async (domain: string , baseURL:any) => {
   const response = await fetch(
-    `http://localhost:3000/api/sub-domain?url=${domain}`,
+    `http://${baseURL}:3000/api/sub-domain?url=${domain}`,
     {
       method: "GET",
     }
@@ -192,7 +192,7 @@ const sampleFetch = async (domain: string) => {
   return res;
 };
 
-const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
+const Subdomain = ({ domain, api }: { domain: string , api: any }): JSX.Element => {
   const [hideLoader, setHideLoader] = useState<boolean>(false);
   const [subdomains, setSubdomains] = useState<string[]>([]);
   //   start insert
@@ -229,7 +229,7 @@ const Subdomain = ({ domain }: { domain: string }): JSX.Element => {
   };
   // end insert
   useEffect(() => {
-    sampleFetch(domain).then((res) => {
+    sampleFetch(domain , api).then((res) => {
       if (res.subdomains) {
         setSubdomains(res.subdomains);
       }
