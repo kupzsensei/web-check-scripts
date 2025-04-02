@@ -5,6 +5,7 @@ import Heading from "components/Form/Heading";
 import { useState, useEffect, ReactNode } from "react";
 import { NavigateOptions, useNavigate } from "react-router-dom";
 import { determineAddressType } from "utils/address-type-checker";
+import { parseJson } from "pages/Results";
 
 const LoadCard = styled(Card)`
   margin: 0 auto 1rem auto;
@@ -181,18 +182,19 @@ const ErrorModalContent = styled.div`
   }
 `;
 
-const sampleFetch = async (domain: string , baseURL:any) => {
+const sampleFetch = async (domain: string , baseURL:string) => {
+  console.log(baseURL, 'this is a baseURL')
   const response = await fetch(
-    `http://${baseURL}:3000/api/sub-domain?url=${domain}`,
+    `${baseURL}/sub-domain?url=${domain}`,
     {
       method: "GET",
     }
   );
-  const res = await response.json();
-  return res;
+  const res = await response;
+  return parseJson(res);
 };
 
-const Subdomain = ({ domain, api }: { domain: string , api: any }): JSX.Element => {
+const Subdomain = ({ domain, api }: { domain: string , api: string }): JSX.Element => {
   const [hideLoader, setHideLoader] = useState<boolean>(false);
   const [subdomains, setSubdomains] = useState<string[]>([]);
   //   start insert
