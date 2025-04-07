@@ -5,6 +5,7 @@ import colors from "styles/colors";
 import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
 import { useState } from "react";
+import DownloadFile from "./download-file";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ const SummaryPage = (): JSX.Element => {
       <ResultsOuter>
         <Nav>
           <Heading color={colors.textColor} size="medium">
-            Scan Result
+            Scan Result  <DownloadFile />
           </Heading>
         </Nav>
       </ResultsOuter>

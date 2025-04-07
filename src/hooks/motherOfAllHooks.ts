@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { LoadingState } from "components/misc/ProgressBar";
 import { AddressType } from "utils/address-type-checker";
+import { MyContext } from "index";
 
 interface UseIpAddressProps<ResultType = any> {
   // Unique identifier for this job type
@@ -16,7 +17,7 @@ interface UseIpAddressProps<ResultType = any> {
     newState: LoadingState,
     error?: string,
     retry?: (data?: any) => void | null,
-    data?: any
+    data?: any,
   ) => void;
   addressInfo: {
     // The hostname/ip address that we're checking
@@ -25,6 +26,7 @@ interface UseIpAddressProps<ResultType = any> {
     addressType: AddressType;
     // The valid address types for this job
     expectedAddressTypes: AddressType[];
+    
   };
 }
 
@@ -37,12 +39,14 @@ const useMotherOfAllHooks = <ResultType = any>(
 ): ReturnType => {
   // Destructure params
   const { addressInfo, fetchRequest, jobId, updateLoadingJobs } = params;
+  // console.log(addressInfo,'address info')
   const { address, addressType, expectedAddressTypes } = addressInfo;
-
-  const [jsonFile, setJsonFile] = useState({});
 
   // Build useState that will be returned
   const [result, setResult] = useState<ResultType>();
+
+  // Global Context
+  const textDumpData = useContext(MyContext)
 
   // Fire off the HTTP fetch request, then set results and update loading / error state
   const doTheFetch = () => {
@@ -60,11 +64,18 @@ const useMotherOfAllHooks = <ResultType = any>(
         } else {
           // Yay, everything went to plan :)
           setResult(res);
-          console.log(
-            res,
-            { jobID: jobId, address: address },
-            "give me this shit"
-          );
+          // console.log(
+          //   { jobID: jobId, address: address, data: res},
+          //   "give me this shit"
+          // );
+          textDumpData?.setData(prev => {
+            prev.push({ jobID: jobId, address: address, data: res})
+            return prev
+          })
+
+          console.log(textDumpData?.data)
+          // lets set the data of the global context
+          // jsonData?.setData(prev => ({...prev , [address || "wew"]: {...prev[address || "wew"],[jobId]: res} }))
           // const safeAddress = address?.toString() ?? "notfound"; // Ensure address is always a string
           // setJsonFile((prev) => ({
           //   ...prev,

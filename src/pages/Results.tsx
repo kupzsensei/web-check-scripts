@@ -303,7 +303,7 @@ const Results = (): JSX.Element => {
       addressInfo: {
         address: ipAddress,
         addressType: "ipV4",
-        expectedAddressTypes: ["ipV4", "ipV6"],
+        expectedAddressTypes: ["ipV4", "ipV6"],                          
       },
       fetchRequest: () =>
         fetch(`https://ipapi.co/${ipAddress}/json/`)
@@ -315,7 +315,7 @@ const Results = (): JSX.Element => {
   const [sslResults, updateSslResults] = useMotherHook({
     jobId: "ssl",
     updateLoadingJobs,
-    addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly },
+    addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly  },
     fetchRequest: () =>
       fetch(`${api}/ssl?url=${address}`).then((res) => parseJson(res)),
   });
