@@ -4,8 +4,8 @@ import Heading from "components/Form/Heading";
 import colors from "styles/colors";
 import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
-import { useState } from "react";
 import DownloadFile from "./download-file";
+import { useEffect, useState } from "react";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -30,27 +30,107 @@ const ResultsContent = styled.section`
   padding-bottom: 1rem;
 `;
 
+
+
+const FilterButtons = styled.div`
+  width: 95vw;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  .one-half {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+  button,
+  input,
+  .toggle-filters {
+    background: ${colors.backgroundLighter};
+    color: ${colors.textColor};
+    border: none;
+    border-radius: 4px;
+    font-family: "PTMono";
+    padding: 0.25rem 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+  }
+  button,
+  .toggle-filters {
+    cursor: pointer;
+    text-transform: capitalize;
+    box-shadow: 2px 2px 0px ${colors.bgShadowColor};
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      box-shadow: 4px 4px 0px ${colors.bgShadowColor};
+      color: ${colors.primary};
+    }
+    &.selected {
+      border: 1px solid ${colors.primary};
+      color: ${colors.primary};
+    }
+  }
+  input:focus {
+    border: 1px solid ${colors.primary};
+    outline: none;
+  }
+  .clear {
+    color: ${colors.textColor};
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+  .toggle-filters {
+    font-size: 0.8rem;
+  }
+  .control-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    a {
+      text-decoration: none;
+    }
+  }
+`;
+
 const SummaryPage = (): JSX.Element => {
   const location = useLocation();
-  // console.log(location.state);
-  // const [jsonFile , setJsonFile] = useState({})
-  // console.log(jsonFile , 'this is my json file')
+  const [loadingState , setLoadingState] = useState(true)
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingState(false);
+    }, 60000);
 
-  return (
-    <main
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    return () => clearTimeout(timer);
+  }, []);
+
+    return (
+      <main
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
       <ResultsOuter>
         <Nav>
-          <Heading color={colors.textColor} size="medium">
-            Scan Result  <DownloadFile />
-          </Heading>
+            {!loadingState ? (
+            <Heading color={colors.textColor} size="medium">
+              <DownloadFile />
+            </Heading>
+            ) : (
+            <Heading color={colors.textColor} size="medium">
+              Scanning...
+            </Heading>
+            )}
         </Nav>
+      
       </ResultsOuter>
       <section
         style={{

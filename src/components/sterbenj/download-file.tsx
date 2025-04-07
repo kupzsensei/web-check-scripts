@@ -29,7 +29,7 @@ const DownloadFile = () => {
   
     return (
       <div>
-        <button style={{ border: '1px solid lightgreen', backgroundColor: 'transparent', outline: '1px solid lightgreen', padding: '10px 20px' , color:'white' }} onClick={() => downloadArrayAsTxt(arrayFile ?? [])}>Download File</button>
+        <button style={{ border: '1px solid lightgreen', backgroundColor: 'transparent', outline: '1px solid lightgreen', padding: '10px 20px' , color:'white' }} onClick={() => downloadArrayAsTxt(arrayFile ?? [])}>Download Scan Result</button>
       </div>
     );
   };
