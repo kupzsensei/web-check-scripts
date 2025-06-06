@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
 import DownloadFile from "./download-file";
 import { useEffect, useState } from "react";
+import StreamingResponseComponent from "./ai-stream";
+import StreamingResponseComponent2 from "./ai-output";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -144,42 +146,16 @@ const SummaryPage = (): JSX.Element => {
           overflow: "auto",
         }}
       >
-        <table>
-          {/* <thead>
-            <tr>
-              <th>Domain</th>
-              <th>Server Location</th>
-              <th>SSL Certificate</th>
-              <th>DNS Server</th>
-              <th>Tech Stack</th>
-              <th>DNSSEC</th>
-              <th>Headers</th>
-              <th>DNS Records</th>
-              <th>HTTP Security</th>
-              <th>Threats</th>
-              <th>Socia Tags</th>
-              <th>TLS Cipher Suites</th>
-              <th>Archive History</th>
-              <th>Block Lists</th>
-              <th>HSTS Check</th>
-              <th>Server Status</th>
-              <th>Security.Txt</th>
-              <th>Redirects</th>
-              <th>Trace Routes</th>
-              <th>TLS Handshake Simulation</th>
-              <th>Firewall</th>
-              <th>TLS Security Issues</th>
-              <th>Linked Pages</th>
-              <th>Open Ports</th>
-              <th>Carbon Footprint</th>
-            </tr>
-          </thead> */}
+        <StreamingResponseComponent />
+        {/* <StreamingResponseComponent2 /> */}
+        {/* <table>
+         
           <tbody>
             {location.state?.map((obj: string) => (
               <ResultRow key={obj} address={obj} />
             ))}
           </tbody>
-        </table>
+        </table> */}
       </section>
     </main>
   );
