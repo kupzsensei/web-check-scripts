@@ -5,9 +5,11 @@ import colors from "styles/colors";
 import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
 import DownloadFile from "./download-file";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import StreamingResponseComponent from "./ai-stream";
 import StreamingResponseComponent2 from "./ai-output";
+import { MyContext } from "index";
+import Loader from "components/misc/Loader";
 
 const ResultsOuter = styled.div`
   display: flex;
@@ -31,8 +33,6 @@ const ResultsContent = styled.section`
   width: calc(100% - 2rem);
   padding-bottom: 1rem;
 `;
-
-
 
 const FilterButtons = styled.div`
   width: 95vw;
@@ -101,38 +101,39 @@ const FilterButtons = styled.div`
 
 const SummaryPage = (): JSX.Element => {
   const location = useLocation();
-  const [loadingState , setLoadingState] = useState(true)
-  
+  const [loadingState, setLoadingState] = useState(true);
+
+  const resData = useContext(MyContext);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingState(false);
-    }, 60000);
+    }, 300000);
 
     return () => clearTimeout(timer);
   }, []);
 
-    return (
-      <main
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+  return (
+    <main
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <ResultsOuter>
         <Nav>
-            {!loadingState ? (
+          {/* {!loadingState ? (
             <Heading color={colors.textColor} size="medium">
               <DownloadFile />
             </Heading>
-            ) : (
+          ) : (
             <Heading color={colors.textColor} size="medium">
               Scanning...
             </Heading>
-            )}
+          )} */}
         </Nav>
-      
       </ResultsOuter>
       <section
         style={{
@@ -144,10 +145,21 @@ const SummaryPage = (): JSX.Element => {
           minHeight: 0,
           minWidth: 0,
           overflow: "auto",
+          padding: "1rem",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <StreamingResponseComponent />
-        {/* <StreamingResponseComponent2 /> */}
+        {/* <StreamingResponseComponent /> */}
+        {loadingState && (
+          <div className="flex flex-col gap-2">
+            <Loader show={true} />
+          </div>
+        )}
+        {!loadingState && (
+          <StreamingResponseComponent2 scanResult={JSON.stringify(resData)} />
+        )}
+
         {/* <table>
          
           <tbody>
