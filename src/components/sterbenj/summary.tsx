@@ -4,7 +4,7 @@ import Heading from "components/Form/Heading";
 import colors from "styles/colors";
 import { useLocation } from "react-router-dom";
 import ResultRow from "pages/ResultRow";
-import DownloadFile from "./download-file";
+import DownloadFile, { Item } from "./download-file";
 import { useContext, useEffect, useState } from "react";
 import StreamingResponseComponent from "./ai-stream";
 import StreamingResponseComponent2 from "./ai-output";
@@ -154,20 +154,18 @@ const SummaryPage = (): JSX.Element => {
         {loadingState && (
           <div className="flex flex-col gap-2">
             <Loader show={true} />
+            <table className="hidden">
+              <tbody>
+                {location.state?.map((obj: string) => (
+                  <ResultRow key={obj} address={obj} />
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
         {!loadingState && (
           <StreamingResponseComponent2 scanResult={JSON.stringify(resData)} />
         )}
-
-        {/* <table>
-         
-          <tbody>
-            {location.state?.map((obj: string) => (
-              <ResultRow key={obj} address={obj} />
-            ))}
-          </tbody>
-        </table> */}
       </section>
     </main>
   );

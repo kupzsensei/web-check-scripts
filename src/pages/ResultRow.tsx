@@ -1027,7 +1027,7 @@ const ResultRow = ({ address }: { address: string }): JSX.Element => {
             columnClassName="masonry-grid-col"
           > */}
         <td style={{ textAlign: "center", width: "max-content" }}>{address}</td>
-        {resultCardData.map(
+        {/* {resultCardData.map(
           ({ id, title, result, tags, refresh, Component }, index: number) => {
             const show =
               (tags.length === 0 || tags.some((tag) => tags.includes(tag))) &&
@@ -1063,7 +1063,7 @@ const ResultRow = ({ address }: { address: string }): JSX.Element => {
               </td>
             ) : null;
           }
-        )}
+        )} */}
         {/* </Masonry> */}
         {/* </ResultsContent> */}
       </tr>

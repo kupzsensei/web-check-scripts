@@ -1,7 +1,7 @@
 import { MyContext } from "index";
 import { useContext } from "react";
 
-type Item = {
+export type Item = {
   jobID: string;
   address: string;
   data: any;

@@ -11,23 +11,23 @@ import html2canvas from "html2canvas";
 // --- StreamingResponseComponent ---
 // This component handles fetching, rendering Markdown, and exporting to PDF.
 export default function StreamingResponseComponent2({ scanResult }) {
-  console.log(scanResult, "this is the scan result");
   // Hardcoded values for the model and endpoint
   const apiEndpoint = "http://10.254.10.25:11434/api/generate";
-  const model = "gemma3";
-
+  // const model = "mistral-nemo:12b";
+  const model = "qwen3:8b";
+  // const model = "gemma3";
+  
+  console.log(scanResult, "this is the scan result");
+  
   // State for the user's prompt
   const prompt = `
-  I am a Cyber Security Analyst , I am investigating a potential security issue , 
-  generate a cyber security Vulnerability Assessment Report in the main domain and each of subdomains, base on the provided information below:
+  You are a Cyber Security Analyst , You are investigating a potential security issue . 
+  Perform an analysis base on the given scan result data.
+  generate a cyber security Vulnerability Assessment Report in the main domain and each of subdomains, base on the provided scan result.
 
-  
-
-
-  
+  scan result:
   ${scanResult}
 
-  
   `;
   // State to hold the raw streamed markdown content
   const [streamedContent, setStreamedContent] = useState("");
